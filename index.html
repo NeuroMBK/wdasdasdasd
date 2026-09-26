@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anything@thisdomain</title>
+    <meta name="description" content="Backend & ML Engineer. High-load, audio processing, and distributed systems.">
+    <meta name="theme-color" content="#030303">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="anything@thisdomain">
+    <meta property="og:description" content="Backend developer of Lane. Audio processing and ML.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Canvas Engine -->
+    <div id="canvas-container">
+        <canvas id="ascii-canvas"></canvas>
+    </div>
+
+    <!-- Scrim Mask (включается только когда вихрь готов) -->
+    <div class="scrim-overlay" id="scrim"></div>
+
+    <!-- UI Overlay -->
+    <div class="ui-wrapper" id="ui-wrapper">
+        <header class="interactive fade-in-element">
+            <span class="brand">anything@thisdomain <span style="opacity: 0.7; font-size: 0.9rem; margin-left: 6px;">🇩🇪</span></span>
+            <span class="location">SOFTWARE &amp; BACKEND ENGINEER</span>
+        </header>
+
+        <main class="interactive">
+            <div class="hero-tag fade-in-element">Backend &amp; ML Engineer</div>
+            <h1 class="fade-in-element">Backend Systems, Audio Processing &amp; ML.</h1>
+            
+            <div class="highlight-box fade-in-element">
+                <p>
+                    Backend developer of <strong>Lane</strong>, a music streaming application with <span class="metric">40,000+ users</span>. Focused on backend architecture, audio processing and ML.
+                </p>
+            </div>
+
+            <p class="bio-text fade-in-element">
+                Working with backend services, computer vision, and CNNs. Ranked <span style="color: var(--accent); font-weight: 500;">95th</span> in the <strong>Advent of Code 2024</strong> global leaderboard. Handling features from design to production.
+            </p>
+
+            <div class="stack-matrix fade-in-element">
+                <span>Python</span>
+                <span>C++</span>
+                <span>Rust</span>
+                <span>Go</span>
+                <span>TypeScript</span>
+                <span>Audio DSP</span>
+                <span>ML / CNNs</span>
+                <span>Distributed Systems</span>
+                <span>Databases</span>
+            </div>
+
+            <div class="actions fade-in-element">
+                <a href="https://github.com/13-4dev" target="_blank" rel="noopener noreferrer" class="btn">GitHub</a>
+                <a href="https://t.me/sleepyshrimp" target="_blank" rel="noopener noreferrer" class="btn">Telegram</a>
+            </div>
+        </main>
+
+        <footer class="interactive fade-in-element">
+            <div></div>
+            <div></div>
+        </footer>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
