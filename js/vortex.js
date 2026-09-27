@@ -30,8 +30,11 @@ export class VortexEngine {
         this.startTime = performance.now();
         this.uiTriggered = false;
 
-        // Смещение центра вихря (по умолчанию правее центра)
-        this.mouse = { x: 0.72, y: 0.48, targetX: 0.72, targetY: 0.48 };
+        // Смещение центра вихря (адаптировано для мобильных и десктопа)
+        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+        const defaultX = isMobile ? 0.62 : 0.72;
+        const defaultY = isMobile ? 0.38 : 0.48;
+        this.mouse = { x: defaultX, y: defaultY, targetX: defaultX, targetY: defaultY };
 
         this.init();
     }
@@ -48,10 +51,24 @@ export class VortexEngine {
             this.mouse.targetY = e.clientY / window.innerHeight;
         });
 
+        const handleTouch = (e) => {
+            if (e.touches && e.touches.length > 0) {
+                this.mouse.targetX = e.touches[0].clientX / window.innerWidth;
+                this.mouse.targetY = e.touches[0].clientY / window.innerHeight;
+            }
+        };
+
+        window.addEventListener('touchstart', handleTouch, { passive: true });
+        window.addEventListener('touchmove', handleTouch, { passive: true });
+
         window.addEventListener('resize', () => this.resize());
     }
 
     resize() {
+        const isMobile = window.innerWidth <= 768;
+        this.charWidth = isMobile ? 8.2 : 9.5;
+        this.charHeight = isMobile ? 14 : 16;
+
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.cols = Math.ceil(this.canvas.width / this.charWidth);

@@ -5,6 +5,8 @@
     --text-muted: #606060;
     --accent: #ffffff;
     --border: rgba(255, 255, 255, 0.1);
+    --btn-bg: rgba(20, 20, 20, 0.65);
+    --btn-border: rgba(255, 255, 255, 0.16);
 }
 
 * {
@@ -13,12 +15,29 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     background-color: var(--bg);
     color: var(--text-main);
     font-family: 'JetBrains Mono', monospace;
     min-height: 100vh;
-    overflow: hidden;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
     user-select: none;
 }
 
@@ -29,8 +48,10 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     z-index: 1;
     background: #000000;
+    pointer-events: none;
 }
 
 canvas {
@@ -46,6 +67,7 @@ canvas {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     background: 
         radial-gradient(ellipse at 25% 50%, rgba(3, 3, 3, 0.94) 0%, rgba(3, 3, 3, 0.78) 55%, rgba(3, 3, 3, 0.15) 100%),
         linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(3, 3, 3, 0.82) 40%, rgba(3, 3, 3, 0.1) 85%);
@@ -64,10 +86,15 @@ canvas {
     position: relative;
     z-index: 10;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 3rem 4.5rem;
+    padding-top: max(3rem, env(safe-area-inset-top));
+    padding-bottom: max(3rem, env(safe-area-inset-bottom));
+    padding-left: max(4.5rem, env(safe-area-inset-left));
+    padding-right: max(4.5rem, env(safe-area-inset-right));
     pointer-events: none;
 }
 
@@ -103,18 +130,24 @@ header {
     align-items: center;
     font-size: 0.85rem;
     letter-spacing: 0.08em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .brand {
     font-weight: 700;
     color: var(--accent);
     text-decoration: none;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
+    display: inline-flex;
+    align-items: center;
+    word-break: break-word;
 }
 
 .location {
     color: var(--text-muted);
     font-size: 0.8rem;
+    letter-spacing: 0.08em;
 }
 
 /* Main Content */
@@ -133,10 +166,10 @@ main {
 }
 
 h1 {
-    font-size: 3.1rem;
+    font-size: clamp(1.85rem, 4.8vw, 3.1rem);
     font-weight: 500;
     letter-spacing: -0.035em;
-    line-height: 1.12;
+    line-height: 1.15;
     margin-bottom: 1.6rem;
     color: var(--accent);
     text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
@@ -145,12 +178,12 @@ h1 {
 /* Lane Highlight */
 .highlight-box {
     border-left: 2px solid rgba(255, 255, 255, 0.4);
-    padding-left: 1.2rem;
+    padding: 0.75rem 1.2rem;
     margin-bottom: 1.8rem;
     background: rgba(10, 10, 10, 0.55);
     backdrop-filter: blur(8px);
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 0 4px 4px 0;
 }
 
 .highlight-box p {
@@ -189,9 +222,10 @@ h1 {
     border: 1px solid var(--border);
     background: rgba(16, 16, 16, 0.85);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: #aaa;
     border-radius: 3px;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
 .stack-matrix span:hover {
@@ -204,8 +238,9 @@ h1 {
 /* Actions */
 .actions {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .btn {
@@ -215,18 +250,37 @@ h1 {
     letter-spacing: 0.08em;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    padding: 9px 18px;
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: all 0.2s ease;
+    min-height: 42px;
+    min-width: 120px;
 }
 
-.btn::before { content: "[ "; color: var(--text-muted); transition: 0.2s; }
-.btn::after { content: " ]"; color: var(--text-muted); transition: 0.2s; }
+.btn::before { content: "[ "; color: var(--text-muted); transition: 0.2s; margin-right: 2px; }
+.btn::after { content: " ]"; color: var(--text-muted); transition: 0.2s; margin-left: 2px; }
 
 .btn:hover {
     color: #ffffff;
-    text-shadow: 0 0 14px rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(35, 35, 35, 0.85);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
 }
 
-.btn:hover::before, .btn:hover::after {
+.btn:active {
+    transform: translateY(0);
+    background: rgba(50, 50, 50, 0.9);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn:hover::before, .btn:hover::after,
+.btn:active::before, .btn:active::after {
     color: #ffffff;
 }
 
@@ -239,9 +293,147 @@ footer {
     letter-spacing: 0.06em;
 }
 
+/* Tablet & Mobile Media Queries */
 @media (max-width: 768px) {
-    .ui-wrapper { padding: 2rem; }
-    h1 { font-size: 2.2rem; }
-    header, footer { flex-direction: column; gap: 8px; align-items: flex-start; }
-    .scrim-overlay { background: rgba(3, 3, 3, 0.94); }
+    .ui-wrapper {
+        padding: 2rem 1.5rem;
+        padding-top: max(2rem, env(safe-area-inset-top));
+        padding-bottom: max(2rem, env(safe-area-inset-bottom));
+        padding-left: max(1.5rem, env(safe-area-inset-left));
+        padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+
+    .scrim-overlay {
+        /* На мобильных устройствах градиент мягче открывает верхне-правую область вихря */
+        background: 
+            radial-gradient(circle at 80% 25%, rgba(3, 3, 3, 0.50) 0%, rgba(3, 3, 3, 0.86) 55%, rgba(3, 3, 3, 0.97) 100%),
+            linear-gradient(to bottom, rgba(3, 3, 3, 0.86) 0%, rgba(3, 3, 3, 0.93) 50%, rgba(3, 3, 3, 0.98) 100%);
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .brand {
+        font-size: 0.9rem;
+    }
+
+    .location {
+        font-size: 0.72rem;
+        letter-spacing: 0.09em;
+    }
+
+    main {
+        margin: 1.6rem 0;
+    }
+
+    .hero-tag {
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        margin-bottom: 0.9rem;
+    }
+
+    h1 {
+        font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+        line-height: 1.2;
+        margin-bottom: 1.3rem;
+    }
+
+    .highlight-box {
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.4rem;
+        border-left-width: 3px;
+    }
+
+    .highlight-box p {
+        font-size: 0.93rem;
+        line-height: 1.6;
+    }
+
+    .bio-text {
+        font-size: 0.88rem;
+        line-height: 1.68;
+        margin-bottom: 1.6rem;
+    }
+
+    .stack-matrix {
+        gap: 6px;
+        margin-bottom: 2rem;
+        font-size: 0.74rem;
+    }
+
+    .stack-matrix span {
+        padding: 5px 9px;
+    }
+
+    .actions {
+        gap: 0.85rem;
+    }
+
+    .btn {
+        flex: 1 1 auto;
+        min-height: 44px;
+        font-size: 0.82rem;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        margin-top: 1.5rem;
+    }
+}
+
+/* Small Smartphone Devices (iPhone SE, Galaxy S, small viewports <= 420px) */
+@media (max-width: 420px) {
+    .ui-wrapper {
+        padding: 1.5rem 1.15rem;
+        padding-top: max(1.5rem, env(safe-area-inset-top));
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+        padding-left: max(1.15rem, env(safe-area-inset-left));
+        padding-right: max(1.15rem, env(safe-area-inset-right));
+    }
+
+    .brand {
+        font-size: 0.84rem;
+    }
+
+    .location {
+        font-size: 0.68rem;
+    }
+
+    h1 {
+        font-size: 1.55rem;
+        line-height: 1.22;
+        margin-bottom: 1.15rem;
+    }
+
+    .highlight-box p {
+        font-size: 0.88rem;
+    }
+
+    .bio-text {
+        font-size: 0.84rem;
+    }
+
+    .stack-matrix {
+        gap: 5px;
+    }
+
+    .stack-matrix span {
+        padding: 4px 8px;
+        font-size: 0.71rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
 }
